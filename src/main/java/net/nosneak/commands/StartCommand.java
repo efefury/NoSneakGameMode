@@ -24,6 +24,10 @@ public class StartCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
+        if(!player.hasPermission(plugin.getConfiguration().getConfig().getString("start-permission"))){
+        player.sendMessage(Utils.colourize(plugin.getConfiguration().getConfig().getString("no-perms-message")));
+        return true;
+    }
          if(plugin.getPlayersInGame().size() < NoSneakPlugin.MIN_PLAYERS) {
              player.sendMessage(Utils.colourize("&cThere aren't enough players to start the game!"));
             return true;

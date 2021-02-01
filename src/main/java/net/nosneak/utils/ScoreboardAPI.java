@@ -21,7 +21,7 @@ public class ScoreboardAPI {
         Objective objective = scoreboard.registerNewObjective("abcde", "abcde");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(Utils.colourize("&6No Sneaking allowed!"));
-        objective.getScore(Utils.colourize("&7Player: " + plugin.getPlayersInGame().size() + "/§6" + NoSneakPlugin.MAX_PLAYERS)).setScore(4);
+        objective.getScore(Utils.colourize("&7Player: " + plugin.getPlayersInGame().size() + "/&6" + NoSneakPlugin.MAX_PLAYERS)).setScore(4);
         objective.getScore(" ").setScore(3);
         if (plugin.getPlayersInGame().size() >= NoSneakPlugin.MIN_PLAYERS) {
             objective.getScore(Utils.colourize("&7Until start:")).setScore(2);

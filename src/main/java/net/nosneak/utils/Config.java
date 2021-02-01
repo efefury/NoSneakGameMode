@@ -46,6 +46,10 @@ public class Config {
         String worldName = config.getString("locations." + arg+ ".World");
         double yaw = config.getDouble("locations." + arg + ".Yaw");
         double pitch = config.getDouble("locations." + arg + ".Pitch");
+        if(worldName == null){
+                plugin.getLogger().severe("The location was not found, please set up the location of the game!");
+            return null;
+        }
         World world = Bukkit.getWorld(worldName);
         return new Location(world, x, y, z, (float) yaw, (float) pitch);
     }

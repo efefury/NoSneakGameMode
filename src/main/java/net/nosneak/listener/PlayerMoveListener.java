@@ -27,12 +27,14 @@ public class PlayerMoveListener implements Listener {
         if(!plugin.getPlayersInGame().contains(player)) {
             return;
         }
-        player.getLocation().add(0, -1, 0).getBlock().setType(Material.AIR);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> player.getLocation().add(0, -1, 0).getBlock().setType(Material.AIR),30);
         if(!plugin.getPlayersInGame().contains(player))  return;
-        if(player.getLocation().getY() <= 25){
+        if(player.getLocation().getY() <= plugin.getConfiguration().getLocation("start").getY() - 15){
             Bukkit.broadcastMessage(Utils.colourize("&aThe player &c" + player.getName() + "&a died!"));
             player.setGameMode(GameMode.SPECTATOR);
             player.getInventory().clear();
+            plugin.getPlayersInGame().remove(player);
+
 
             if (plugin.getPlayersInGame().size() == 1) {
                 Bukkit.broadcastMessage(Utils.colourize("&cThe player &a" + plugin.getPlayersInGame().get(0).getName() + "&c won the game!"));

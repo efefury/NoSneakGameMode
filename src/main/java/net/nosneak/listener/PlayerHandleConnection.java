@@ -25,15 +25,16 @@ public class PlayerHandleConnection implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.getInventory().clear();
-        event.setJoinMessage(Utils.colourize("&c>> &6" + player.getName() + "&7 [" + (plugin.getPlayersInGame().size()+1) + "/" + NoSneakPlugin.MAX_PLAYERS) + "]");
+        event.setJoinMessage(Utils.colourize("&c>> &6" + player.getName() + "&7 [" + (plugin.getPlayersInGame().size() + 1) + "/" + NoSneakPlugin.MAX_PLAYERS) + "]");
         if (plugin.isStarted()) {
             player.setGameMode(GameMode.SPECTATOR);
             player.sendMessage(Utils.colourize("&aThe game has already &cstarted&a so you are a spectator!"));
             return;
         }
         ScoreboardAPI scoreboardAPI = new ScoreboardAPI(plugin);
-        Bukkit.getScheduler().runTaskTimer(plugin, scoreboardAPI::updateScoreboard, 0,20);
+        Bukkit.getScheduler().runTaskTimer(plugin, scoreboardAPI::updateScoreboard, 0, 20);
         player.setFoodLevel(20);
+        player.setHealth(20);
         player.setGameMode(GameMode.ADVENTURE);
         player.setLevel(0);
         plugin.getPlayersInGame().add(player);
@@ -48,7 +49,7 @@ public class PlayerHandleConnection implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         plugin.getPlayersInGame().remove(player);
-        event.setQuitMessage(Utils.colourize("&c<< &6" + player.getName() + "&7[" +(plugin.getPlayersInGame().size()) + "/" + NoSneakPlugin.MAX_PLAYERS) + "]");
+        event.setQuitMessage(Utils.colourize("&c<< &6" + player.getName() + "&7[" + (plugin.getPlayersInGame().size()) + "/" + NoSneakPlugin.MAX_PLAYERS) + "]");
     }
 
 

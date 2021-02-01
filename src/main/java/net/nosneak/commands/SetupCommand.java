@@ -24,6 +24,14 @@ public class SetupCommand implements CommandExecutor {
             return true;
         }
         Player player = (Player) sender;
+
+
+
+        if(!player.hasPermission(plugin.getConfiguration().getConfig().getString("setup-permission"))){
+            player.sendMessage(Utils.colourize(plugin.getConfiguration().getConfig().getString("no-perms-message")));
+            return true;
+        }
+
         if(args.length == 0) {
             player.sendMessage(Utils.colourize("&cWrong Syntax: /setup <spawn, start>"));
             return true;
