@@ -1,0 +1,4 @@
+name: NoSneak
+version: @version@
+main: net.nosneak.NoSneakPlugin
+api-version: 1.16
