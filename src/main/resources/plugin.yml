@@ -1,4 +1,7 @@
 name: NoSneak
-version: @version@
+version: 1.0
 main: net.nosneak.NoSneakPlugin
 api-version: 1.16
+commands:
+  setup:
+  start:

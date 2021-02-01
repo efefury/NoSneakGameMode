@@ -1,6 +1,9 @@
 package net.nosneak.listener;
 
 import net.nosneak.NoSneakPlugin;
+import net.nosneak.utils.Utils;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,9 +20,29 @@ public class PlayerMoveListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if (!plugin.isStarted()) return;
+        if (!plugin.isStarted()) {
+            return;
+        }
         Player player = event.getPlayer();
-        player.getLocation().subtract(0, -1, 0).getBlock().setType(Material.AIR);
+        if(!plugin.getPlayersInGame().contains(player)) {
+            return;
+        }
+        player.getLocation().add(0, -1, 0).getBlock().setType(Material.AIR);
+        if(!plugin.getPlayersInGame().contains(player))  return;
+        if(player.getLocation().getY() <= 25){
+            Bukkit.broadcastMessage(Utils.colourize("&aThe player &c" + player.getName() + "&a died!"));
+            player.setGameMode(GameMode.SPECTATOR);
+            player.getInventory().clear();
 
+            if (plugin.getPlayersInGame().size() == 1) {
+                Bukkit.broadcastMessage(Utils.colourize("&cThe player &a" + plugin.getPlayersInGame().get(0).getName() + "&c won the game!"));
+                plugin.startEndTimer();
+                plugin.setDone(true);
+                plugin.setStarted(false);
+                plugin.getPlayersInGame().remove(player);
+                for(Player all : Bukkit.getOnlinePlayers())
+                player.teleport(all.getLocation());
+            }
+        }
     }
 }

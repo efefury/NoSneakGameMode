@@ -7,6 +7,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class ProtectionListener implements Listener {
 
@@ -34,6 +35,10 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void onCreature(CreatureSpawnEvent event) {
+        event.setCancelled(true);
+    }
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
 }

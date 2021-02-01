@@ -38,17 +38,15 @@ public class Config {
             e.printStackTrace();
         }
     }
-    public Location getLocation(String arg) {
-        int x = config.getInt("locations. " + arg + ".X");
-        int y = config.getInt("locations. " + arg + ".Y");
-        int z = config.getInt("locations. " + arg + ".Z");
-        String worldName = config.getString("locations. " + arg + ".World");
-        double yaw = config.getDouble("locations. " + arg + ".Yaw");
-        double pitch = config.getDouble("locations. " + arg + ".Pitch");
-        if(worldName == null) return null;
-        World world = Bukkit.getWorld(worldName);
-        if(world == null) return null;
-        return new Location(world, x,y,z,(float)yaw, (float)pitch);
-    }
 
+    public Location getLocation(String arg) {
+        int x = config.getInt("locations." + arg + ".X");
+        int y = config.getInt("locations." + arg + ".Y");
+        int z = config.getInt("locations." + arg + ".Z");
+        String worldName = config.getString("locations." + arg+ ".World");
+        double yaw = config.getDouble("locations." + arg + ".Yaw");
+        double pitch = config.getDouble("locations." + arg + ".Pitch");
+        World world = Bukkit.getWorld(worldName);
+        return new Location(world, x, y, z, (float) yaw, (float) pitch);
+    }
 }

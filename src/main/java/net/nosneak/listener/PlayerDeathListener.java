@@ -12,6 +12,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathListener implements Listener {
 
     private final NoSneakPlugin plugin;
+    private int timer;
 
     public PlayerDeathListener(NoSneakPlugin plugin) {
         this.plugin = plugin;
@@ -27,31 +28,36 @@ public class PlayerDeathListener implements Listener {
         player.getInventory().clear();
 
         if (plugin.getPlayersInGame().size() == 1) {
-            Bukkit.broadcastMessage("&cThe player &a" + plugin.getPlayersInGame().get(0).getName() + "&c won the game!");
-            timer(player);
+            Bukkit.broadcastMessage(Utils.colourize("&cThe player &a" + plugin.getPlayersInGame().get(0).getName() + "&c won the game!"));
+            timer();
             plugin.setDone(true);
             plugin.setStarted(false);
+
         }
         event.setCancelled(true);
     }
 
-    private void timer(Player player) {
-        int timer = 5;
+    private void timer() {
+        timer = 5;
         Bukkit.getScheduler().runTaskTimer(plugin, bukkitTask -> {
-            sendEndMessage(player, timer);
+            timer--;
+            sendEndMessage( timer);
+            if(timer == 0)
+                bukkitTask.cancel();
         }, 0, 20);
     }
 
-    private void sendEndMessage(Player player, int time) {
+    private void sendEndMessage( int time) {
         if(time == 0) {
-            player.sendMessage(Utils.colourize("&aThe server stops &anow"));
+            Bukkit.broadcastMessage(Utils.colourize("&aThe server stops &anow"));
             for (Player all : Bukkit.getOnlinePlayers()) {
                 all.kickPlayer("The server stopped, thanks for playing!");
+                all.getServer().shutdown();
             }
             return;
         }
-
-        player.sendActionBar(Utils.colourize("&aThe game ends in &a" + time + " seconds"));
-        player.sendMessage(Utils.colourize("&aThe game ends in &a "+ time + "seconds"));
+        for(Player all : Bukkit.getOnlinePlayers())
+            all.sendActionBar(Utils.colourize("&aThe game stops in &a" + time + " seconds"));
+        Bukkit.broadcastMessage(Utils.colourize("&aThe game stops in &a" + time + " seconds"));
     }
 }

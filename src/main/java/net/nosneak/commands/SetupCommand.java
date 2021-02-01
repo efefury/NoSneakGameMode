@@ -37,7 +37,9 @@ public class SetupCommand implements CommandExecutor {
             plugin.getConfiguration().getConfig().set("locations." + args[0]+ ".Yaw", player.getLocation().getYaw());
             plugin.getConfiguration().getConfig().set("locations." + args[0]+ ".Pitch", player.getLocation().getPitch());
             plugin.getConfiguration().save();
-        }
-         return true;
+        } else
+            player.sendMessage(Utils.colourize("&cWrong Syntax: /setup <spawn, start>"));
+
+        return true;
     }
 }
